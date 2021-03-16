@@ -14,24 +14,21 @@ public class Controller implements Initializable {
     }
 
     void ejercicio1 () {
+        int[] a = generarAleatorios();
+
+        System.out.println(maximo(a, 0));
+        System.out.println(sumarPar(a, a.length - 1));
+        System.out.println("Todos:" + mostrar(a, a.length - 1));
+        System.out.println("Todos par:" + mostrarPar(a, a.length - 1));
+    }
+
+    int[] generarAleatorios() {
         int [] aleatorios = new int[20];
 
-        for (int i = 0; i < aleatorios.length; i++) {
-            int aleatorio = (int) (Math.random() * 100);
-            aleatorios[i] = aleatorio;
-            System.out.println("Numero: " + aleatorio);
-        }
-        System.out.println(maximo(aleatorios, 0));
+        for (int i = 0; i < aleatorios.length; i++)
+            aleatorios[i] = (int) (Math.random() * 20);
 
-        int [] aleatoriosPar = new int[20];
-        int x = 0;
-        for (int i = 0; i < aleatorios.length; i++) {
-            if (aleatorios[i] % 2 == 0) {
-                aleatoriosPar[x] = aleatorios[i];
-                x++;
-            }
-        }
-        System.out.println(sumarValores(aleatoriosPar, aleatoriosPar.length - 1));
+        return aleatorios;
     }
 
     static int maximo (int t[], int pos) {
@@ -51,16 +48,41 @@ public class Controller implements Initializable {
         return(res);
     }
 
-    public static int sumarValores(int[] array, int posArray) {
-        int rta;
-
-        if (posArray == 0)
-            return array[posArray];
+    public static int sumarPar(int[] t, int n) {
+        if (n == 0)
+            return 0;
+        if (t[n] % 2 == 0)
+            return t[n] + sumarPar(t, n - 1);
         else
-            rta = (array[posArray]) + sumarValores(array, posArray - 1);
-
-        return rta;
+            return sumarPar(t, n - 1);
     }
+
+    static String mostrar(int t[], int n) {
+        if (n == 0)
+            return " " + t[n];
+        else
+            return " " + t[n] + mostrar(t, n - 1);
+    }
+
+    static String mostrarPar(int t[], int n) {
+        if (n == 0)
+            return "";
+        if (t[n] % 2 == 0)
+            return " " + t[n] + mostrarPar(t, n - 1);
+        else
+            return mostrarPar(t, n - 1);
+    }
+
+    int busquedaLineal (int A[], int clave, int n, int i) {
+        if (i == n + 1)
+            return -1;
+        else if (A[i] == clave)
+            return i;
+        else
+            return busquedaLineal(A, clave, n, i + 1);
+    }
+
+
     /*
     *
     * Llene de forma aleatoria un arreglo de 20 elementos numéricos y realice las siguiente acciones.
